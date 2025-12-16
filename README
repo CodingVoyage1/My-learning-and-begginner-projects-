@@ -1,0 +1,21 @@
+# GraphedX2.0
+
+GraphedX2.0 is a Python GUI-based application built using Tkinter and Matplotlib.
+It allows users to generate different types of graphs by simply providing input data.
+
+## Features
+- Histogram
+- Bar graph
+- Scatter plot
+- Line graph
+- Pie chart (separate window)
+
+## Requirements
+- Python 3.x
+- Tkinter
+- Matplotlib
+- Pillow
+
+## Note
+This is an early version of the project.
+Improvements and refactoring will be done in future updates.
