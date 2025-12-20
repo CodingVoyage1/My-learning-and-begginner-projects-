@@ -19,3 +19,56 @@ It allows users to generate different types of graphs by simply providing input 
 ## Note
 This is an early version of the project.
 Improvements and refactoring will be done in future updates.
+
+
+
+-------------------------------------------------------------------
+
+# RanDice – Password Generator 🔐
+
+RanDice is a simple GUI-based password generator application built using Python and Tkinter.
+It allows users to generate strong random passwords of a specified length with a clean
+and user-friendly interface.
+
+This project is created as part of my learning journey while exploring Python GUI
+development and basic application logic.
+
+---
+
+## 🚀 Features
+
+- Generate random passwords of custom length
+- Includes lowercase, uppercase, digits, and special characters
+- Read-only output field (password cannot be edited manually)
+- Clear button to reset the generated password
+- Simple and clean Tkinter-based UI
+
+---
+
+## 🛠 Technologies Used
+
+- Python
+- Tkinter
+- Random module
+- String module
+- Pillow (for image handling)
+
+---
+
+## ⚠️ Note
+
+This project is built for learning and practice purposes.
+More improvements and features may be added in future updates as I continue learning.
+
+---
+
+## 📌 Future Improvements
+
+- Copy password to clipboard
+- Password strength rules (at least one digit, symbol, etc.)
+- Modern UI using CustomTkinter
+- Dark mode support
+
+---
+
+⭐ This project represents a step forward in my Python GUI learning journey.
