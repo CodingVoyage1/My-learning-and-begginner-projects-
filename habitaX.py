@@ -15,6 +15,7 @@ print(""
         "'s' to see tasks\n"
         "'u' to upgrade your task")
 print("-------------------------")
+
 while True:
 
     input1 = input("Enter your task :")
