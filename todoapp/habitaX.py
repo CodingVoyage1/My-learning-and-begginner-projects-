@@ -6,8 +6,9 @@ list and works in file so that after closing the programe it will still be saved
 , SO LETS MAKE IT !....
 
 """
+import storage as strg
 
-t_tasks = []
+t_tasks = strg.load_tasks()
 print("--------OPTIONS----------")
 print(""
         "'q' to quit \n"
@@ -22,22 +23,25 @@ while True:
     
 
     if input1.lower() == "q":
+        strg.save_tasks(t_tasks)
         print("Thanks for using the programme!")
         break
     elif input1.lower() == "d":
         del_t = input("Enter the name to delete : ").strip().lower()
         if del_t in t_tasks:
            t_tasks.remove(del_t)
+           strg.save_tasks(t_tasks)
            print(f"{del_t} is deleted !")
 
         else:
           print("Task is not found !")  
     elif input1.lower() == "u":
-        u_ts = input("Enter the name of task to upgrade :").lower()
-        new = input("Enter the name of upgraded task :").lower()
+        u_ts = input("Enter the name of task to upgrade :").lower().lower()
+        new = input("Enter the name of upgraded task :").lower().lower()
         if u_ts in t_tasks:
          ind = t_tasks.index(u_ts)
          t_tasks[ind] = new
+         strg.save_tasks(t_tasks)
          print(f"{u_ts} is upgraded to {new}")
         else:
            print("Task not found !")
@@ -53,6 +57,7 @@ while True:
 
     else:
         t_tasks.append(input1.lower())
+        strg.save_tasks(t_tasks)
         
         print(f"'{input1}' is added")
         
