@@ -1,6 +1,6 @@
 """
 Docstring for storage
-its storage for habitaX programme this fille will be used as storage where i can add/delete/upgrade tasks >....
+its storage for habitaX programme this file will be used as storage where i can add/delete/upgrade tasks >....
 """
 
 FILE_NAME = "tasks.txt"
