@@ -4,102 +4,120 @@ Docstring for todoapp.habitaX0.2
  is ToDo app but this version will be more awesome and fun .LETS MAKE IT !
 
 """
-#imports 
+# imports
 import customtkinter as ctk
 import tkinter as tk
-from PIL import Image as img 
-import storage as strg 
-#--------------------------------------------------------------
+from PIL import Image
+import storage as strg
 
-#Making Window
+# --------------------------------------------------------------
+# Window
 window = ctk.CTk()
-window.geometry("400x300")
+window.geometry("450x360")
 window.title("HabitaX")
 window.resizable(False, False)
-#--------------------------------------------------------------
-#Logo adding 
-image = img.open("HabitaX.png")
-image = ctk.CTkImage(light_image=image, size=(140, 120))
-img_lbl = ctk.CTkLabel(window, image=image, text="")
-img_lbl.pack(pady=10)
-#Frame's
+
+# --------------------------------------------------------------
+# Logo
+logo = Image.open("HabitaX.png")
+logo = ctk.CTkImage(light_image=logo, size=(140, 120))
+logo_lbl = ctk.CTkLabel(window, image=logo, text="")
+logo_lbl.pack(pady=10)
+
+# --------------------------------------------------------------
+# Main container
 main_frame = ctk.CTkFrame(window)
-main_frame.place(relx=0.5, rely=0.7, anchor="center")
-main_frame.columnconfigure(0, weight=1) 
+main_frame.place(relx=0.5, rely=0.68, anchor="center")
+
+main_frame.columnconfigure(0, weight=1)
 main_frame.columnconfigure(1, weight=1)
-frame3 = ctk.CTkFrame(main_frame)
-frame3.grid(row=0, column=0, rowspan=2, padx=10, pady=5, sticky="n")
-frame2 = ctk.CTkFrame(main_frame)
-frame2.grid(row=0, column=1, padx=10, pady=5, sticky="n")
-frame = ctk.CTkFrame(main_frame)
-frame.grid(row=1, column=1, padx=10, pady=5, sticky="n")
 
-#--------------------------------------------------------------
+# Left: Listbox frame
+list_frame = ctk.CTkFrame(main_frame)
+list_frame.grid(row=0, column=0, rowspan=2, padx=10, pady=5)
 
-#inputs or entry
-entry1 = ctk.CTkEntry(frame2, font=("Arial", 12), width=140, placeholder_text="Enter your tasks " )
-entry1.grid()
-listbox = tk.Listbox(frame3, height=8 , width=30,)
-listbox.pack(pady=20,)
-#---------------------------------------------------------------
+# Right top: Entry frame
+input_frame = ctk.CTkFrame(main_frame)
+input_frame.grid(row=0, column=1, padx=10, pady=5, sticky="n")
+
+# Right bottom: Buttons frame
+btn_frame = ctk.CTkFrame(main_frame)
+btn_frame.grid(row=1, column=1, padx=10, pady=5, sticky="n")
+
+# --------------------------------------------------------------
+# Widgets
+entry1 = ctk.CTkEntry(
+    input_frame,
+    width=160,
+    placeholder_text="Enter your task"
+)
+entry1.pack(pady=5)
+
+listbox = tk.Listbox(
+    list_frame,
+    height=9,
+    width=28
+)
+listbox.pack(pady=10)
+
+# --------------------------------------------------------------
+# Load tasks (simple list)
 t_tasks = strg.load_tasks()
-#---------------------------------------------------------------
-#functions or options  
-def list_tasks():
-  listbox.delete(0, tk.END)
 
-  for i , task in enumerate(t_tasks, start=1):
-    listbox.insert(tk.END, f"{i}.{task}")
+# --------------------------------------------------------------
+# Functions
+
+def list_tasks():
+    """Refresh listbox"""
+    listbox.delete(0, tk.END)
+    for task in (t_tasks):
+      listbox.insert(tk.END, task)
+
+
 
 def add_task():
-   task = entry1.get().strip().lower()
-   if not task:
-     print("Empty task not allowed !")
-     return
-   
-   if task in t_tasks:
-     print("Task already exist !")
-     entry1.delete(0, "end")
-     return
-   t_tasks.append(task)
-   strg.save_tasks(t_tasks)
-   list_tasks()
-   entry1.delete(0, "end")
+    """Add new task"""
+    task = entry1.get().strip().lower()
+    if not task:
+        return
+
+    if task in t_tasks:
+        entry1.delete(0, "end")
+        return
+
+    t_tasks.append(task)
+    strg.save_tasks(t_tasks)
+    list_tasks()
+    entry1.delete(0, "end")
+
 
 def delete_task():
-  selected = listbox.curselection()
-  if not selected:
-    print("No task selected")
-    return
-  index = selected[0]
-  t_tasks.pop(index)
-  strg.save_tasks(t_tasks)
-  list_tasks()
+    """Delete selected task"""
+    selected = listbox.curselection()
+    if not selected:
+        return
 
+    index = selected[0]
+    t_tasks.pop(index)
+    strg.save_tasks(t_tasks)
+    list_tasks()
 
-
-#------------------------------------------------------------
-
-#buttons
-
-btn_func = {
-  "Add Task" : add_task,
-  "Delete Task": delete_task,
-  "Show Task" : list_tasks,
-  
+# --------------------------------------------------------------
+# Buttons
+buttons = {
+    "Add Task": add_task,
+    "Delete Task": delete_task,
 }
-for i in range(len(btn_func)):
-  frame.rowconfigure(i, weight=1)
 
-for row, (text, func) in enumerate(btn_func.items()):
-  btn = ctk.CTkButton(frame, text=text, command=func)
-  btn.grid(row=row, column=0, sticky="ew", padx=5, pady=5)
-  
-       
+for i, (text, func) in enumerate(buttons.items()):
+    btn = ctk.CTkButton(btn_frame, text=text, command=func)
+    btn.grid(row=i, column=0, sticky="ew", padx=5, pady=5)
 
+# Enter key support
+entry1.bind("<Return>", lambda e: add_task())
 
+# Initial display
+list_tasks()
 
-
-
-
+# --------------------------------------------------------------
 window.mainloop()

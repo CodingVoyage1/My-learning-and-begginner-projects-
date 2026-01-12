@@ -43,7 +43,7 @@ quizz= [
 txt_box =ctk.CTkTextbox(window, width=350, height=160, wrap = "word")
 txt_box.pack( pady=15)
 txt_box.configure(state="disabled")
-entry = ctk.CTkEntry(window, placeholder_text="1,2,3,4...", font=("Arial", 14))
+entry = ctk.CTkEntry(window, placeholder_text="Enter your answer", font=("Arial", 14))
 entry.pack(pady=5)
 current_answer = ""
 current_options = []
@@ -96,8 +96,9 @@ def etr_ans():
   entry.delete(0, "end")
 
 
+ctk.CTkButton(window, text="Enter", command=etr_ans).pack(pady=2)
 ctk.CTkButton(window, text="Next", command=show).pack(pady= 2)
 ctk.CTkButton(window , text="show answer", command=ans,).pack()
-ctk.CTkButton(window, text="Enter", command=etr_ans).pack(pady=2)
+
 
 window.mainloop()

@@ -16,8 +16,8 @@ def load_tasks():
     except FileNotFoundError:
         pass
     return tasks
-def save_tasks(tasks):
+def save_tasks(task):
     with open(FILE_NAME, "w") as f:
-        for task in tasks:
+        for task in task:
             f.write(task + "\n")
 
