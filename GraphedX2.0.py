@@ -26,8 +26,7 @@ photo = ImageTk.PhotoImage(img)
 imglb = tk.Label(window, image=photo)
 imglb.image = photo
 imglb.pack(pady=5)
-#label = tk.Label(text="Enter your data and get your Graph",font=("Arial", 13)) 
-#label2 = tk.Label(text="---------------------------------------")
+
 frame = tk.Frame(window, bg="lightgreen")
 frame.place(relx=0.5, rely=0.60, anchor="center",)
 
