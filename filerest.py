@@ -102,22 +102,27 @@ class FileOrganizer:
                 dest = os.path.join(self.destination, file)  
                 
              
-            if type_input == "image" and file.endswith(image_ext):
+                if type_input == "image" and file.lower().endswith(image_ext):
+                        messagebox.showinfo("moving..", file)
+                        shutil.move(src, dest)
+                        moved += 1
+                        messagebox.showinfo("File Moved", f"Moved : {file}")
+                        listbox.insert(tk.END, f"{src} ➡️ {dest}")
+                            
+                elif type_input == "documents" and file.lower().endswith(doc_ext):
+                        shutil.move(src, dest)
+                        messagebox.showinfo("File Moved", f"Moved : {file}")
+                        moved += 1
+                        
+                elif type_input == "video" and file.lower().endswith(vid_ext):
+                        shutil.move(src, dest)
+                        messagebox.showinfo("File Moved", f"Moved : {file}")
+                        moved += 1
+                        
+                elif type_input == "audio" and file.lower().endswith(aud_ext):
                     shutil.move(src, dest)
-                    moved += 1
-                    listbox.insert(tk.END, f"{src} ➡️ {dest}")
-                           
-            elif type_input == "documents" and file.endswith(doc_ext):
-                    shutil.move(src, dest)
-                    moved += 1
-                    
-            elif type_input == "video" and file.endswith(vid_ext):
-                    shutil.move(src, dest)
-                    moved += 1
-                    
-            elif type_input == "image" and file.endswith(aud_ext):
-                   shutil.move(src, dest)
-                   moved +=1
+                    messagebox.showinfo("File Moved", f"Moved : {file}")
+                    moved +=1
                     
             messagebox.showinfo("Done", f"{moved} files moved")
             extension_pop.destroy()
