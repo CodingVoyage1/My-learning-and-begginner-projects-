@@ -1,14 +1,14 @@
 import requests
 import customtkinter as ctk
 from PIL import Image as img
-
+from six import BytesIO
 
 ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")
 
 window = ctk.CTk()
-window.geometry("500x500")
-window.title("Poekdex 📱")
+window.geometry("600x600")
+window.title("Pokedex 📱")
 pokedex = img.open("pokedex.png")
 pokedex = ctk.CTkImage(light_image=pokedex, size=(180,100))
 pokeball = img.open("pokeball.png")
@@ -30,7 +30,7 @@ h_frame.pack_propagate(False)
 info_frame = ctk.CTkFrame(
   window, 
   width=250, 
-  height=200, 
+  height=300,
   fg_color="#FF7966", 
   corner_radius=20,
   border_width=4,
@@ -52,14 +52,14 @@ pkm_name = ctk.CTkEntry(
   placeholder_text="Enter your fav pokemon 😊", 
   width=200
 )
-pkm_name.pack(pady=10)
+pkm_name.pack(pady=15)
 poke_data = ctk.CTkLabel(info_frame, font=("Century Gothic", 12,"bold"), text="")
 poke_data.pack()
 
 
 
 
-def get_poekemon_info(pokemon):
+def get_pokemon_info(pokemon):
   
   pokeapi = "https://pokeapi.co/api/v2/"
   
@@ -78,20 +78,27 @@ def get_poekemon_info(pokemon):
 
 def fetch_and_show():
    pokemon = pkm_name.get().strip()
+
    if not pokemon:
       poke_data.configure(text="Please enter the name of pokemon 😊")
       return
-   info = get_poekemon_info(pokemon)
+   info = get_pokemon_info(pokemon)
 
    if info:
-      poke_data.configure(text=f"""
+       image_url = info["sprites"]["other"]["official-artwork"]["front_default"]
+       img_data = requests.get(image_url).content
+       pil_image = img.open(BytesIO(img_data))
+       ctk_image = ctk.CTkImage(light_image=pil_image, dark_image=pil_image, size=(160, 160))
+       poke_data.configure(text=f"""
 Name : {info['name'].title()}
 ID : {info['id']}
 Height : {info['height']/10 }m
 Weight : {info['weight']/10 }kg
 Type : {info["types"][0]["type"]["name"]}
 
-""")
+""", image=ctk_image,compound="top")
+       poke_data.image = ctk_image
+
   
 
 pkm_name.bind("<Return>", lambda _: fetch_and_show())
